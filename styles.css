@@ -384,6 +384,45 @@ applied. Check again to see why late */
 
 /* 
 
+BOOKS PAGE
+
+*/
+
+#books__main {
+    background-color: rgba(115, 66, 214, 0.1);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+select {
+    border-radius: 4px;
+    background-color: #fff;
+    height: 40px;
+    width: 100%;
+    max-width: 200px;
+    line-height: 40px;
+    color: #606266;
+    outline: none;
+    padding: 0 16px;
+    border: 1px solid #dcdfe6;
+}
+
+.books__header--title {
+    margin-bottom: 0;
+}
+
+.books__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+}
+
+
+/* 
+
 EXPLORE
 
 */
