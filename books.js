@@ -1,10 +1,18 @@
 
 
+let books;
 
-function renderBooks(filter) {
-    const booksWrapper = document.querySelector(".books")
+async function renderBooks(filter) {
+    const booksWrapper = document.querySelector(".books");
 
-    const books = getBooks()
+    booksWrapper.classList.add('books__loading')
+    
+    if (!books) { // if there are books, fetch and await if there is books don't await to sort books. 
+     books = await getBooks();
+    }
+
+    booksWrapper.classList.remove('books__loading')
+
 
     if (filter === 'LOW_TO_HIGH') {
         books.sort((a, b) => (a.salePrice || a.originalPrice) - (b.salePrice || b.originalPrice))
@@ -17,7 +25,7 @@ function renderBooks(filter) {
     }
 
     const booksHtml = books.map(book => {
-    return `<div class="book">
+        return `<div class="book">
     <figure class="book__img--wrapper">
         <img class="book__img" src="${book.url}" alt="">
     </figure>
@@ -32,8 +40,8 @@ function renderBooks(filter) {
       </div>
     </div>`
     })
-    .join(""); /* this change the data from array to whole string*/
-    
+        .join(""); /* this change the data from array to whole string*/
+
     booksWrapper.innerHTML = booksHtml;
 }
 
@@ -42,7 +50,7 @@ function priceHTML(originalPrice, salePrice) {
         return `$${originalPrice.toFixed(2)}`
     }
     return `<span class="book__price--normal">$${originalPrice.toFixed(2)}</span> $${salePrice.toFixed(2)}`
-    
+
 }
 
 function ratingsHTML(rating) {
@@ -56,7 +64,7 @@ function ratingsHTML(rating) {
     return ratingHTML;
 }
 
-function filterBooks(event) {   
+function filterBooks(event) {
     renderBooks(event.target.value)
 }
 
@@ -66,94 +74,98 @@ setTimeout(() => {
 
 // FAKE DATA
 function getBooks() {
-    return [
-        {
-            id: 1,
-            title: "Crack the Coding Interview",
-            url: "assets for E-commerce project/crack the coding interview.png",
-            originalPrice: 49.95,
-            salePrice: 14.95,
-            rating: 4.5,
-        },
-        {
-            id: 2,
-            title: "Atomic Habits",
-            url: "assets for E-commerce project/atomic habits.jpg",
-            originalPrice: 39,
-            salePrice: null,
-            rating: 5,
-        },
-        {
-            id: 3,
-            title: "Deep Work",
-            url: "assets for E-commerce project/deep work.jpeg",
-            originalPrice: 29,
-            salePrice: 12,
-            rating: 5,
-        },
-        {
-            id: 4,
-            title: "The 10X Rule",
-            url: "assets for E-commerce project/book-1.jpeg",
-            originalPrice: 44,
-            salePrice: 19,
-            rating: 4.5,
-        },
-        {
-            id: 5,
-            title: "Be Obsessed Or Be Average",
-            url: "assets for E-commerce project/book-2.jpeg",
-            originalPrice: 32,
-            salePrice: 17,
-            rating: 4,
-        },
-        {
-            id: 6,
-            title: "Rich Dad Poor Dad",
-            url: "assets for E-commerce project/book-3.jpeg",
-            originalPrice: 70,
-            salePrice: 12.5,
-            rating: 5,
-        },
-        {
-            id: 7,
-            title: "Cashflow Quadrant",
-            url: "assets for E-commerce project/book-4.jpeg",
-            originalPrice: 11,
-            salePrice: 10,
-            rating: 4,
-        },
-        {
-            id: 8,
-            title: "48 Laws of Power",
-            url: "assets for E-commerce project/book-5.jpeg",
-            originalPrice: 38,
-            salePrice: 17.95,
-            rating: 4.5,
-        },
-        {
-            id: 9,
-            title: "The 5 Second Rule",
-            url: "assets for E-commerce project/book-6.jpeg",
-            originalPrice: 35,
-            salePrice: null,
-            rating: 4,
-        },
-        {
-            id: 10,
-            title: "Your Next Five Moves",
-            url: "assets for E-commerce project/book-7.jpg",
-            originalPrice: 40,
-            salePrice: null,
-            rating: 4,
-        },
-        {
-            id: 11,
-            title: "Mastery",
-            url: "assets for E-commerce project/book-8.jpeg",
-            originalPrice: 30,
-            salePrice: null,
-            rating: 4.5,
-        },
-    ];
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve([
+                {
+                    id: 1,
+                    title: "Crack the Coding Interview",
+                    url: "assets for E-commerce project/crack the coding interview.png",
+                    originalPrice: 49.95,
+                    salePrice: 14.95,
+                    rating: 4.5,
+                },
+                {
+                    id: 2,
+                    title: "Atomic Habits",
+                    url: "assets for E-commerce project/atomic habits.jpg",
+                    originalPrice: 39,
+                    salePrice: null,
+                    rating: 5,
+                },
+                {
+                    id: 3,
+                    title: "Deep Work",
+                    url: "assets for E-commerce project/deep work.jpeg",
+                    originalPrice: 29,
+                    salePrice: 12,
+                    rating: 5,
+                },
+                {
+                    id: 4,
+                    title: "The 10X Rule",
+                    url: "assets for E-commerce project/book-1.jpeg",
+                    originalPrice: 44,
+                    salePrice: 19,
+                    rating: 4.5,
+                },
+                {
+                    id: 5,
+                    title: "Be Obsessed Or Be Average",
+                    url: "assets for E-commerce project/book-2.jpeg",
+                    originalPrice: 32,
+                    salePrice: 17,
+                    rating: 4,
+                },
+                {
+                    id: 6,
+                    title: "Rich Dad Poor Dad",
+                    url: "assets for E-commerce project/book-3.jpeg",
+                    originalPrice: 70,
+                    salePrice: 12.5,
+                    rating: 5,
+                },
+                {
+                    id: 7,
+                    title: "Cashflow Quadrant",
+                    url: "assets for E-commerce project/book-4.jpeg",
+                    originalPrice: 11,
+                    salePrice: 10,
+                    rating: 4,
+                },
+                {
+                    id: 8,
+                    title: "48 Laws of Power",
+                    url: "assets for E-commerce project/book-5.jpeg",
+                    originalPrice: 38,
+                    salePrice: 17.95,
+                    rating: 4.5,
+                },
+                {
+                    id: 9,
+                    title: "The 5 Second Rule",
+                    url: "assets for E-commerce project/book-6.jpeg",
+                    originalPrice: 35,
+                    salePrice: null,
+                    rating: 4,
+                },
+                {
+                    id: 10,
+                    title: "Your Next Five Moves",
+                    url: "assets for E-commerce project/book-7.jpg",
+                    originalPrice: 40,
+                    salePrice: null,
+                    rating: 4,
+                },
+                {
+                    id: 11,
+                    title: "Mastery",
+                    url: "assets for E-commerce project/book-8.jpeg",
+                    originalPrice: 30,
+                    salePrice: null,
+                    rating: 4.5,
+                },
+            ])
+        }, 1000)
+    })
 }
