@@ -1,8 +1,10 @@
 
 
-let books;
+let books; // this declares a global variable to store the book data once it is fetched. By keeping it
+//outside the function, the app avoids re-fetchin the data everytime a user chages a filter
 
-async function renderBooks(filter) {
+async function renderBooks(filter) { //this is the "brain" of the script. it handles
+    // the data flow from fetching to displaying
     const booksWrapper = document.querySelector(".books");
 
     booksWrapper.classList.add('books__loading')
@@ -24,7 +26,7 @@ async function renderBooks(filter) {
         books.sort((a, b) => b.rating - a.rating);
     }
 
-    const booksHtml = books.map(book => {
+    const booksHtml = books.map(book => { //transforms each book object into a string of HTML
         return `<div class="book">
     <figure class="book__img--wrapper">
         <img class="book__img" src="${book.url}" alt="">
@@ -40,9 +42,10 @@ async function renderBooks(filter) {
       </div>
     </div>`
     })
-        .join(""); /* this change the data from array to whole string*/
+        .join(""); // this change the data from array to whole string. It converts the
+        //resulting array of HTML strings into one long string that the browser can inject into the page
 
-    booksWrapper.innerHTML = booksHtml;
+    booksWrapper.innerHTML = booksHtml; //this injects the generated HTML into the website
 }
 
 function priceHTML(originalPrice, salePrice) {
@@ -64,12 +67,14 @@ function ratingsHTML(rating) {
     return ratingHTML;
 }
 
-function filterBooks(event) {
+function filterBooks(event) { // a bridge function that captures the value from a 
+    //dropdown menu(select element) and passes it to renderBooks() to trigger a re-sort and re-render
     renderBooks(event.target.value)
 }
 
 setTimeout(() => {
-    renderBooks();
+    renderBooks(); // this triggers the initial renderBooks() call when the page loads,
+    //ensuring the UI starts building immediately
 });
 
 // FAKE DATA
